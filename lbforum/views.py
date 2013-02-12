@@ -254,7 +254,7 @@ def vote(request, post_id, value):
     """
     post = Post.objects.get(id=post_id)
 
-    post.set_vote(user=request.user, value=value)
+    post.set_vote(user_id=request.user.id, value=value)
 
     return HttpResponse(post.value, 'json')
 

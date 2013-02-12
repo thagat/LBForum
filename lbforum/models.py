@@ -257,13 +257,13 @@ class Post(models.Model):  # can't edit...
 
         return value
 
-    def set_vote(self, user, value):
+    def set_vote(self, user_id, value):
         """ sets a vote for a post model """
 
         try:
-            vote = Vote.objects.get(post=self, user=user)
+            vote = Vote.objects.get(post=self, user_id=user_id)
         except Vote.DoesNotExist:
-            Vote.objects.create(post=self, value=value, user=user)
+            Vote.objects.create(post=self, value=value, user_id=user_id)
         else:
             vote.value = value
             vote.save()
