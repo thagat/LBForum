@@ -11,7 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 #from django.contrib import messages
 
 from forms import EditPostForm, NewPostForm, ForumForm
-from models import Topic, Forum, Post
+from models import Topic, Forum, Post, Vote
 import settings as lbf_settings
 
 
@@ -231,6 +231,32 @@ def update_topic_attr_as_not(request, topic_id, attr):
                                             args=[topic.forum.slug]))
     else:
         return HttpResponseRedirect(reverse("lbforum_topic", args=[topic.id]))
+
+
+@csrf_exempt
+@login_required
+def vote_up(request):
+    return vote(request, 1)
+
+
+@csrf_exempt
+@login_required
+def vote_down(request):
+    return vote(request, -1)
+
+
+def vote(request, value):
+    post_id = request.raw_post_data
+    try:
+        vote = Vote.objects.get(post_id=post_id, user=request.user)
+    except Vote.DoesNotExist:
+        Vote.objects.create(post_id=post_id, value=value, user=request.user)
+    else:
+        vote.update(value=value)
+
+    post = Post.objects.get(id=post_id)
+
+    return HttpResponse(post.get_value(), 'json')
 
 #Feed...
 #Add Post

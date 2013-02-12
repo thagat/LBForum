@@ -246,6 +246,10 @@ class Post(models.Model):  # can't edit...
         page = (post_idx - 1) / settings.CTX_CONFIG['TOPIC_PAGE_SIZE'] + 1
         return '%s?page=%s#p%s' % (topic.get_absolute_url(), page, self.pk)
 
+    def get_value(self):
+        """ Returns the value of the post measured in votes """
+        return self.votes.aggregate(Sum('value'))['value__sum']
+
 
 class LBForumUserProfile(models.Model):
     user = models.OneToOneField(User, related_name='lbforum_profile',
