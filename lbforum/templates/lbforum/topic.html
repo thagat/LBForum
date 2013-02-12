@@ -20,7 +20,6 @@
           {{post.id}}{% if not forloop.last %},{%endif%}
         {% endfor %}
       ]);
-      topic.initialize();
       topic.voteUpUrls = {
         {% for post in posts %}     
         {{post.id}}: "{% url lbforum_vote_up post.id%}"{% if not forloop.last %},{%endif%}
@@ -31,6 +30,7 @@
         {{post.id}}: "{% url lbforum_vote_down post.id%}"{% if not forloop.last %},{%endif%}
         {% endfor %}
       };
+      topic.initialize();
   });
 </script>
 {% endblock %}

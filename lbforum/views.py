@@ -235,24 +235,24 @@ def update_topic_attr_as_not(request, topic_id, attr):
 
 @csrf_exempt
 @login_required
-def vote_up(request):
-    return vote(request, 1)
+def vote_up(request, post_id):
+    return vote(request, post_id, 1)
 
 
 @csrf_exempt
 @login_required
-def vote_down(request):
-    return vote(request, -1)
+def vote_down(request, post_id):
+    return vote(request, post_id, -1)
 
 
-def vote(request, value):
-    post_id = request.raw_post_data
+def vote(request, post_id, value):
     try:
         vote = Vote.objects.get(post_id=post_id, user=request.user)
     except Vote.DoesNotExist:
         Vote.objects.create(post_id=post_id, value=value, user=request.user)
     else:
-        vote.update(value=value)
+        vote.value = value
+        vote.save()
 
     post = Post.objects.get(id=post_id)
 

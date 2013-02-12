@@ -1,16 +1,19 @@
-var Post = function(id){
+var Post = function(id, voteUpUrl, voteDownUrl){
   this.id = id;
+  this.voteUpUrl = voteUpUrl;
+  this.voteDownUrl = voteDownUrl;
 
   this.initialize = function(){
     var _this = this;
+
     $("#vote-" + this.id + "-up-btn").click(function(){
-      _this.vote(topic.voteUpUrls[_this.id]);
+      _this.vote(_this.voteUpUrl);
     });
 
     $("#vote-" + this.id + "-down-btn").click(function(){
-      _this.vote(topic.voteDownUrls[_this.id]);
+      _this.vote(_this.voteDownUrl);
     });
-  }
+  };
 
   this.vote = function(url){
     var _this;
@@ -54,11 +57,11 @@ var Topic = function(id, postIds){
 
     $('.post-entry a').attr({ target: "_blank" });
 
-    // initialize the posts
+    // initialize the postsn
     for(i in postIds){
       postId = postIds[i];
 
-      post = new Post(postId);
+      post = new Post(postId, this.voteUpUrls[postId], this.voteDownUrls[postId]);
 
       post.initialize();
       this.posts.push(post);
