@@ -25,10 +25,15 @@ topic_patterns = patterns(
     url('^new/(?P<forum_id>\d+)/$', views.new_post, name='lbforum_new_topic'),
 )
 
-vote_patterns = patterns(
+post_patterns = patterns(
     '',
-    url(r'^up/$', views.vote_up, name='lbforum_vote_up'),
-    url(r'^down/$', views.vote_down, name='lbforum_vote_down'),
+    url('^(?P<post_id>\d+)/$', views.post, name='lbforum_post'),
+    url('^(?P<post_id>\d+)/edit/$', views.edit_post, name='lbforum_post_edit'),
+    url('^(?P<post_id>\d+)/delete/$', views.delete_post,
+        name='lbforum_post_delete'),
+    url('^(?P<post_id>\d+)/vote_up/$', views.vote_up, name='lbforum_vote_up'),
+    url('^(?P<post_id>\d+)/vote_down/$', views.vote_down,
+        name='lbforum_vote_down'),
 )
 
 urlpatterns = patterns(
@@ -40,16 +45,10 @@ urlpatterns = patterns(
 
     (r'^topic/', include(topic_patterns)),
 
-    (r'^vote/', include(vote_patterns)),
-
     url('^reply/new/(?P<topic_id>\d+)/$', views.new_post,
         name='lbforum_new_replay'),
 
-    url('^post/(?P<post_id>\d+)/$', views.post, name='lbforum_post'),
-    url('^post/(?P<post_id>\d+)/edit/$', views.edit_post,
-        name='lbforum_post_edit'),
-    url('^post/(?P<post_id>\d+)/delete/$', views.delete_post,
-        name='lbforum_post_delete'),
+    (r'^post/', include(post_patterns)),
 
     url('^user/(?P<user_id>\d+)/topics/$', views.user_topics,
         name='lbforum_user_topics'),
