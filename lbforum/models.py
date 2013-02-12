@@ -189,6 +189,8 @@ class Post(models.Model):  # can't edit...
 
     has_imgs = models.BooleanField(default=False)
     has_attachments = models.BooleanField(default=False)
+    value = models.IntegerField(
+        default=0, help_text=_("The value of the post measured in votes"))
 
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(blank=True, null=True)
@@ -246,9 +248,14 @@ class Post(models.Model):  # can't edit...
         page = (post_idx - 1) / settings.CTX_CONFIG['TOPIC_PAGE_SIZE'] + 1
         return '%s?page=%s#p%s' % (topic.get_absolute_url(), page, self.pk)
 
-    def get_value(self):
+    def update_value(self):
         """ Returns the value of the post measured in votes """
-        return self.votes.aggregate(Sum('value'))['value__sum']
+        value = self.votes.aggregate(Sum('value'))['value__sum']
+
+        self.value = value
+        self.save()
+
+        return value
 
 
 class LBForumUserProfile(models.Model):

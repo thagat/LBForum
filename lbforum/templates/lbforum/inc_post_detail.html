@@ -20,6 +20,21 @@
             <ul class="author-ident">
                 <li class="useravatar"><a href="{% url lbforum_user_profile post.posted_by.pk %}">{% avatar post.posted_by %}</a></li>
                 <li class="username"> <a href="{% url lbforum_user_profile post.posted_by.pk %}">{{post.posted_by.username}}</a> </li>
+                <li class="post-voting">
+                    <ul>
+                      <li>
+                        <button id="vote-{{topic.id}}-up-btn">
+                          Up
+                        </button>
+                      </li>
+                      <li id="post-{{topic.id}}-value">{{post.value}}</li>
+                      <li>
+                        <button id="vote-{{topic.id}}-down-btn">
+                          Down
+                        </button>
+                      </li>
+                    </ul>
+                </li>
                 <li class="usertitle"><span>{% trans "Member" %}</span></li>
                 <li class="userstatus"><span>{{post.posted_by|online}}</span></li>
             </ul>

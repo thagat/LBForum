@@ -256,7 +256,7 @@ def vote(request, value):
 
     post = Post.objects.get(id=post_id)
 
-    return HttpResponse(post.get_value(), 'json')
+    return HttpResponse(post.update_value(), 'json')
 
 #Feed...
 #Add Post

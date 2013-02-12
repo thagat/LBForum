@@ -8,6 +8,23 @@
     {{ topic.subject }} - {{ LBFORUM_TITLE }}
 {% endblock %}
 
+{% block extra_header %}
+<script type="text/javascript" src="{{ STATIC_URL }}lbforum/scripts/topic.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}lbforum/scripts/jquery.min.js">
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+      var topic = new Topic({{topic.id}}, [
+        {% for post in posts %}     
+          {{post.id}}{% if not forloop.last %},{%endif%}
+        {% endfor %}
+      ]);
+      topic.initialize();
+  });
+</script>
+{% endblock %}
+
 {% block content %}
     <div id="replybox">
         <div id="actionbox">
@@ -128,15 +145,4 @@
             {% include 'lbforum/inc_copyright.html' %}
         </div>
     </div>
-
-    <script type="text/javascript" src="{{ STATIC_URL }}lbforum/scripts/jquery.min.js"></script>
-    <script type="text/javascript">
-        $('.entry-attachments-img-s a').click(function() {
-            var p = $(this).parent();
-            p.hide();
-            p.next().show()
-            return false;
-        })
-        $('.post-entry a').attr({ target: "_blank" });
-    </script>
 {% endblock %}
