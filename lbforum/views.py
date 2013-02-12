@@ -11,7 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 #from django.contrib import messages
 
 from forms import EditPostForm, NewPostForm, ForumForm
-from models import Topic, Forum, Post, Vote
+from models import Topic, Forum, Post
 import settings as lbf_settings
 
 
@@ -236,27 +236,27 @@ def update_topic_attr_as_not(request, topic_id, attr):
 @csrf_exempt
 @login_required
 def vote_up(request, post_id):
+    """ A json view that set a positive vote for a given post """
     return vote(request, post_id, 1)
 
 
 @csrf_exempt
 @login_required
 def vote_down(request, post_id):
+    """ A json view that set a negative vote for a given post """
     return vote(request, post_id, -1)
 
 
 def vote(request, post_id, value):
-    try:
-        vote = Vote.objects.get(post_id=post_id, user=request.user)
-    except Vote.DoesNotExist:
-        Vote.objects.create(post_id=post_id, value=value, user=request.user)
-    else:
-        vote.value = value
-        vote.save()
+    """ A json view that set the value of a vote for a given post.
+    This view should only be called by other views and never by the user
 
+    """
     post = Post.objects.get(id=post_id)
 
-    return HttpResponse(post.update_value(), 'json')
+    post.set_vote(user=request.user, value=value)
+
+    return HttpResponse(post.value, 'json')
 
 #Feed...
 #Add Post

@@ -257,6 +257,19 @@ class Post(models.Model):  # can't edit...
 
         return value
 
+    def set_vote(self, user, value):
+        """ sets a vote for a post model """
+
+        try:
+            vote = Vote.objects.get(post=self, user=user)
+        except Vote.DoesNotExist:
+            Vote.objects.create(post=self, value=value, user=user)
+        else:
+            vote.value = value
+            vote.save()
+
+        self.update_value()
+
 
 class LBForumUserProfile(models.Model):
     user = models.OneToOneField(User, related_name='lbforum_profile',
