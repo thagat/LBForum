@@ -264,6 +264,18 @@ class LBForumUserProfile(models.Model):
     def get_absolute_url(self):
         return self.user.get_absolute_url()
 
+
+class Vote(models.Model):
+    """ a simple model to vote on posts """
+
+    user = models.ForeignKey(User,
+                             help_text=_("The user that voted"))
+    post = models.ForeignKey(Post,
+                             help_text=_("The post that was voted on"))
+    value = models.IntegerField(
+        Post, default=0, editable=False,
+        help_text=_("The value of the vote (1 for vote up, -1 vote down)"))
+
 #### smoe function ###
 
 
