@@ -279,9 +279,9 @@ class LBForumUserProfile(models.Model):
 class Vote(models.Model):
     """ a simple model to vote on posts """
 
-    user = models.ForeignKey(User,
+    user = models.ForeignKey(User, related_name="votes",
                              help_text=_("The user that voted"))
-    post = models.ForeignKey(Post,
+    post = models.ForeignKey(Post, related_name="votes",
                              help_text=_("The post that was voted on"))
     value = models.IntegerField(
         Post, default=0, editable=False,
