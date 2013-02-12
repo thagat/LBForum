@@ -4,11 +4,11 @@ var Post = function(id){
   this.initialize = function(){
     var _this = this;
     $("#vote-" + this.id + "-up-btn").click(function(){
-      _this.vote('/vote/up/');
+      _this.vote(topic.voteUpUrls[_this.id]);
     });
 
     $("#vote-" + this.id + "-down-btn").click(function(){
-      _this.vote('/vote/down/');
+      _this.vote(topic.voteDownUrls[_this.id]);
     });
   }
 
@@ -42,16 +42,24 @@ var Topic = function(id, postIds){
   this.posts = [];
 
   this.initialize = function(){
+    // declare the variables
+    var i, post, postId;
+
     $('.entry-attachments-img-s a').click(function() {
         var p = $(this).parent();
         p.hide();
         p.next().show()
         return false;
     })
+
     $('.post-entry a').attr({ target: "_blank" });
 
-    for(postId in postIds){
-      var post = new Post(postId);
+    // initialize the posts
+    for(i in postIds){
+      postId = postIds[i];
+
+      post = new Post(postId);
+
       post.initialize();
       this.posts.push(post);
     }
