@@ -11,7 +11,6 @@ from django.db.models import Sum
 from django.conf import settings
 
 from attachments.models import Attachment
-from onlineuser.models import Online
 
 
 class Config(models.Model):
@@ -341,17 +340,7 @@ def update_forum_on_topic(sender, instance, created, **kwargs):
         instance.forum.num_topics += 1
         instance.forum.save()
 
-
-def update_user_last_activity(sender, instance, created, **kwargs):
-    if instance.user:
-        p, created = LBForumUserProfile.objects.get_or_create(
-            user=instance.user)
-
-        p.last_activity = instance.updated_on
-        p.save()
-
 post_save.connect(create_user_profile, sender=User)
 post_save.connect(update_topic_on_post, sender=Post)
 post_save.connect(update_forum_on_post, sender=Post)
 post_save.connect(update_forum_on_topic, sender=Topic)
-post_save.connect(update_user_last_activity, sender=Online)

@@ -40,7 +40,6 @@ Requirements
 * BeautifulSoup_
 * django-helper_
 * django-lb-attachments_
-* django-onlineuser_
 * django-simple-avatar_
 
 .. _`Python 2.5+`: http://python.org/
@@ -52,7 +51,6 @@ Requirements
 .. _postmarkup: http://code.google.com/p/postmarkup/
 .. _django-helper: https://github.com/vicalloy/django-helper
 .. _django-lb-attachments: https://github.com/vicalloy/django-lb-attachments
-.. _django-onlineuser: https://github.com/vicalloy/onlineuser
 .. _django-simple-avatar: https://github.com/vicalloy/django-simple-avatar
 
 Installation
@@ -89,13 +87,11 @@ The LBForum has some settings should be set in `settings.py`:
     'lbforum',
     'simpleavatar',
     'djangohelper',
-    'onlineuser',
     'attachments',
 
 #. Add the following middleware to ``MIDDLEWARE_CLASSES``::
 
     'pagination.middleware.PaginationMiddleware',
-    'onlineuser.middleware.OnlineUserMiddleware',
     
 #. add ``"djangohelper.context_processors.ctx_config",`` to ``TEMPLATE_CONTEXT_PROCESSORS``::
 

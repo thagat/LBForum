@@ -1,7 +1,6 @@
 {% extends "lbforum/base.html" %}
 
 {% load i18n %}
-{% load onlineuser_tags %}
 {% load lbforum_widget_tags %}
 
 {% block content %}
@@ -28,7 +27,6 @@
 <!-- brd-stats begins -->
 {% lbf_status %}
 <!-- brd-stats ends -->
-{% onlineinfos 1 "lbforum/widgets/onlineinfos.html" %}
 
 <div class="gen-content" id="brd-friend-links">
 		<span>{% trans "Friend Links" %}</span> {% include 'lbforum/plugins/inc_friend_links.html' %}

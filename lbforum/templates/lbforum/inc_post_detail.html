@@ -36,7 +36,7 @@
                     </ul>
                 </li>
                 <li class="usertitle"><span>{% trans "Member" %}</span></li>
-                <li class="userstatus"><span>{{post.posted_by|online}}</span></li>
+                <li class="userstatus"><span>{{post.posted_by}}</span></li>
             </ul>
             <ul class="author-info">
                 <li><span>{% trans "Registered" %}: <strong>{{ post.posted_by.date_joined|date:"Y-m-d" }}</strong></span></li>
@@ -83,7 +83,7 @@
                 <span class="need-reply">{% trans "to see the content, user must reply first." %}</span>
                 {% endif %}
                 {% if post.posted_by.lbforum_profile.signature %}
-                <div class="sig-content"> 
+                <div class="sig-content">
                     <span class="sig-line"><!-- --></span>
                     {{ post.posted_by.lbforum_profile.signature|bbcode|safe }}
                 </div>
@@ -97,12 +97,12 @@
         <div class="post-options">
             <p class="post-contacts"></p>
             <p class="post-actions">
-                <span class="quote-post"><a href="{% url lbforum_new_replay topic.pk %}?qid={{post.pk}}">{% trans "quote" %}</a></span> 
+                <span class="quote-post"><a href="{% url lbforum_new_replay topic.pk %}?qid={{post.pk}}">{% trans "quote" %}</a></span>
                 {% if user == post.posted_by or user.is_staff %}
-                <span class="edit-post"><a href="{% url lbforum_post_edit post.pk %}">{% trans "edit" %}</a></span> 
+                <span class="edit-post"><a href="{% url lbforum_post_edit post.pk %}">{% trans "edit" %}</a></span>
                 {% endif %}
                 {% if user.is_staff and not post.topic_post %}
-                <span class="del-post"><a href="{% url lbforum_post_delete post.id %}" onclick="return confirm('{% trans "Do you want to delete it?" %}')">{% trans "delete" %}</a></span> 
+                <span class="del-post"><a href="{% url lbforum_post_delete post.id %}" onclick="return confirm('{% trans "Do you want to delete it?" %}')">{% trans "delete" %}</a></span>
                 {% endif %}
             </p>
         </div>

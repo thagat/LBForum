@@ -21,10 +21,10 @@ class osx_install_data(install_data):
         self.set_undefined_options('install', ('install_lib', 'install_dir'))
         install_data.finalize_options(self)
 
-if sys.platform == "darwin": 
-    cmdclasses = {'install_data': osx_install_data} 
-else: 
-    cmdclasses = {'install_data': install_data} 
+if sys.platform == "darwin":
+    cmdclasses = {'install_data': osx_install_data}
+else:
+    cmdclasses = {'install_data': install_data}
 
 def fullsplit(path, result=None):
     """
@@ -82,7 +82,6 @@ setup(
         "Django>=1.3",
         "django-helper>=0.8.1",
         "django-lb-attachments>=0.8",
-        "django-onlineuser>=0.8",
         "django-simple-avatar>=0.8.1",
         "BeautifulSoup",
         "postmarkup",
